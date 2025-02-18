@@ -9,8 +9,8 @@ namespace HydraHead
     public class Event
     {
         public string Description { get; set; }
-        public string Type { get; set; }
-        public string Category { get; set; }
+        public EventType Type { get; set; }
+        public int CategoryId { get; set; }
         public DateTime Timestamp { get; set; }
         public string HostAddress { get; set; }
     }

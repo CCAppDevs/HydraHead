@@ -8,6 +8,8 @@ namespace HydraHead
     {
         private readonly ILogger<Worker> _logger;
 
+        private HttpService _httpService;
+
         private static HttpClient sharedClient = new()
         {
             BaseAddress = new Uri("https://geek-jokes.sameerkumar.website/"),
@@ -21,13 +23,13 @@ namespace HydraHead
         public Worker(ILogger<Worker> logger)
         {
             _logger = logger;
+            _httpService = new HttpService();
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             // TODO: add support for arbitrary api calls
             // TODO: detect when a call is missed and add it as an error event
-            // TODO: formalize the types and categories of an event (enum?)
             // TODO: setup http client as a service instead of direct
             // TODO: Add a way to adjust how often the api is called (timeout) and to chose if we want a specific info/warn/error level
             // TODO: combine the two projects into a single project with a shared library
@@ -48,8 +50,8 @@ namespace HydraHead
                     JsonSerializer.Serialize(new Event
                     {
                         Description = jsonResponse,
-                        Type = "API Call",
-                        Category = "Informational",
+                        Type = EventType.ApiCall,
+                        CategoryId = 1,
                         HostAddress = "https://geek-jokes.sameerkumar.website/api?format=json"
                     }),
                     Encoding.UTF8,
@@ -65,7 +67,7 @@ namespace HydraHead
                 {
                     _logger.LogInformation(jsonResponse);
                 }
-                await Task.Delay(5000, stoppingToken);
+                await Task.Delay(10000, stoppingToken);
             }
         }
     }

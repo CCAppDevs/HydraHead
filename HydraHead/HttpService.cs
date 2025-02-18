@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace HydraHead
 {
-    public enum EventType
+    public class HttpService
     {
-        None = 0,
-        ApiCall = 1,
-        LogFileMessage = 2,
     }
 }
