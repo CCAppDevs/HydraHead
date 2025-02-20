@@ -21,10 +21,10 @@ namespace HydraHead
             BaseAddress = new Uri("https://localhost:7101/"),
         };
 
-        public Worker(ILogger<Worker> logger)
+        public Worker(ILogger<Worker> logger, HttpService http)
         {
             _logger = logger;
-            _httpService = new HttpService();
+            _httpService = http;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -33,7 +33,6 @@ namespace HydraHead
             // TODO: detect when a call is missed and add it as an error event
             // TODO: setup http client as a service instead of direct
             // TODO: Add a way to adjust how often the api is called (timeout) and to chose if we want a specific info/warn/error level
-            // TODO: combine the two projects into a single project with a shared library
 
 
             while (!stoppingToken.IsCancellationRequested)
