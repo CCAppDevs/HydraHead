@@ -18,10 +18,10 @@ namespace HydraHead
             _client.BaseAddress = new Uri(_baseUrl);
         }
 
-        public abstract void Delete();
-        public abstract T Get();
-        public abstract T[] GetAll();
-        public abstract T Post(T data);
-        public abstract T Put(T data);
+        public abstract Task Delete();
+        public abstract Task<T> Get();
+        public abstract Task<T[]> GetAll();
+        public abstract Task<T> Post(T data);
+        public abstract Task<T> Put(T data);
     }
 }

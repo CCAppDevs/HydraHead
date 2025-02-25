@@ -8,11 +8,10 @@ namespace HydraHead
 {
     public interface IHttpService<T>
     {
-        T Get();
-        T[] GetAll();
-        T Post(T data);
-        T Put(T data);
-        void Delete();
-
+        Task<T> Get();
+        Task<T[]> GetAll();
+        Task<T> Post(T data);
+        Task<T> Put(T data);
+        Task Delete();
     }
 }
