@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace HydraHead
 {
-    public abstract class HttpService<T> : IHttpService<T>
+    public abstract class HttpService<T, K> : IHttpService<T, K>
     {
-        protected string _baseUrl;
+        public string _baseUrl;
 
         protected static HttpClient _client = new();
 
@@ -18,10 +18,10 @@ namespace HydraHead
             _client.BaseAddress = new Uri(_baseUrl);
         }
 
-        public abstract Task Delete();
-        public abstract Task<T> Get();
+        public abstract Task Delete(K id);
+        public abstract Task<T> Get(K id);
         public abstract Task<T[]> GetAll();
         public abstract Task<T> Post(T data);
-        public abstract Task<T> Put(T data);
+        public abstract Task<T> Put(K id, T data);
     }
 }

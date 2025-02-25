@@ -10,11 +10,13 @@ namespace HydraHead
         private readonly ILogger<JokeAPIWorker> _logger;
 
         private JokeService _httpService;
+        private HydraApiService _hydra;
 
-        public JokeAPIWorker(ILogger<JokeAPIWorker> logger, JokeService http)
+        public JokeAPIWorker(ILogger<JokeAPIWorker> logger, JokeService http, HydraApiService hydra)
         {
             _logger = logger;
             _httpService = http;
+            _hydra = hydra;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -36,30 +38,27 @@ namespace HydraHead
                     return;
                 }
 
-                //response.EnsureSuccessStatusCode();
 
-                //var jsonResponse = await response.Content.ReadAsStringAsync();
+                // create a new Event with our data we received from the joke api
+                var evt = new Event
+                {
+                    EventId = 0,
+                    CategoryId = 1,
+                    Description = joke.joke,
+                    Type = EventType.ApiCall,
+                    Timestamp = DateTime.Now,
+                    HostAddress = _httpService._baseUrl + "/api?format=json"
+                };
 
+                // call the hydra service and post a new event
+                var response = _hydra.Post(evt);
 
-                //// create an event based on the data from the api
-                //using StringContent jsonContent = new(
-                //    JsonSerializer.Serialize(new Event
-                //    {
-                //        Description = jsonResponse,
-                //        Type = EventType.ApiCall,
-                //        CategoryId = 1,
-                //        HostAddress = "https://geek-jokes.sameerkumar.website/api?format=json"
-                //    }),
-                //    Encoding.UTF8,
-                //    "application/json");
+                // check to see if it was a success
+                if (response == null)
+                {
+                    _logger.LogCritical("could not post an event to hydra");
+                }
 
-                //// post that as a new event on the database
-                //using HttpResponseMessage eventResponse = await eventClient.PostAsync("api/events/", jsonContent);
-
-                //eventResponse.EnsureSuccessStatusCode();
-
-
-                // output for logging
                 if (_logger.IsEnabled(LogLevel.Information))
                 {
                     _logger.LogInformation(joke.joke);

@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace HydraHead
 {
-    public class JokeService : HttpService<Joke>
+    public class JokeService : HttpService<Joke, int>
     {
         public JokeService(string baseUrl) : base(baseUrl)
         {
         }
 
-        public override Task Delete()
+        public override Task Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public override async Task<Joke> Get()
+        public override async Task<Joke> Get(int id)
         {
             // this gets data from the api
             using HttpResponseMessage response = await _client.GetAsync("/api?format=json");
@@ -49,7 +49,7 @@ namespace HydraHead
             throw new NotImplementedException();
         }
 
-        public override Task<Joke> Put(Joke data)
+        public override Task<Joke> Put(int id, Joke data)
         {
             throw new NotImplementedException();
         }
