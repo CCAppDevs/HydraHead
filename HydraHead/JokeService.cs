@@ -19,7 +19,7 @@ namespace HydraHead
             throw new NotImplementedException();
         }
 
-        public override async Task<Joke> Get(int id)
+        public override async Task<Joke> Get(int id = 0)
         {
             // this gets data from the api
             using HttpResponseMessage response = await _client.GetAsync("/api?format=json");
