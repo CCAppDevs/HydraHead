@@ -14,4 +14,10 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Hydra\Library\Library.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Files\Test.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
